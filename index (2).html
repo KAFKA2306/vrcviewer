@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>VRChatアバターギャラリー</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 20px; background: #f5f5f5; }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .avatar-card { background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .avatar-card:hover { transform: translateY(-5px); }
+        .avatar-image-container { position: relative; cursor: pointer; }
+        .avatar-image { width: 100%; height: 200px; object-fit: cover; }
+        .avatar-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); 
+                               color: white; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .avatar-image-container:hover .avatar-image-overlay { opacity: 1; }
+        .avatar-info { padding: 15px; }
+        .avatar-name { font-weight: bold; margin-bottom: 8px; }
+        .avatar-author { font-size: 14px; color: #666; }
+        .avatar-id { font-size: 12px; color: #999; margin-top: 8px; word-break: break-all; }
+        .search-container { max-width: 600px; margin: 0 auto 30px; text-align: center; }
+        #search-input { width: 80%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .filter-container { display: flex; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-btn { margin: 5px; padding: 8px 15px; background: #fff; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; }
+        .filter-btn:hover, .filter-btn.active { background: #4a6fa5; color: white; }
+    </style>
+</head>
+<body>
+    <h1>VRChatアバターギャラリー</h1>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="アバター名やクリエイター名で検索...">
+    </div>
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="sample">サンプル</button>
+        <button class="filter-btn" data-filter="trial">試着用</button>
+    </div>
+    <div class="gallery">
+
+        <div class="avatar-card" data-name="pitanサンプルver1.11" data-author="suzukura">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_8c843dd2-1772-41c9-ab53-a5b1d91053bd', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_1effdc8c-469b-4515-a8df-31831343f4d9/10/256" alt="PITANサンプルver1.11">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">PITANサンプルver1.11</div>
+                <div class="avatar-author">作者: SUZUKURA</div>
+                <div class="avatar-id">ID: avtr_8c843dd2-1772-41c9-ab53-a5b1d91053bd</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="aoi vket2024 sample" data-author="jamzo2020">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_557a56fc-5c6b-40d4-8c99-d1609125eb12', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_712ffb4f-8587-4ab3-8911-76553eaf671f/3/256" alt="AOI vket2024 Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">AOI vket2024 Sample</div>
+                <div class="avatar-author">作者: Jamzo2020</div>
+                <div class="avatar-id">ID: avtr_557a56fc-5c6b-40d4-8c99-d1609125eb12</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="閃花(senka)_sample" data-author="るありんご">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_55aa20cc-d2e5-403c-8ad4-03ae1e8a504e', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_c1dbe1d7-0742-4cf6-ac73-fcd1b3b0b064/7/256" alt="閃花(Senka)_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">閃花(Senka)_Sample</div>
+                <div class="avatar-author">作者: るありんご</div>
+                <div class="avatar-id">ID: avtr_55aa20cc-d2e5-403c-8ad4-03ae1e8a504e</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="runyasmaple_ribbonknit" data-author="kousakamochi_">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_c3e1f746-b565-4e4d-ab8d-9fc51d7959bb', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_25f1094f-0b62-4d5c-b377-9eeca4b06679/2/256" alt="RunyaSmaple_RibbonKnit">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">RunyaSmaple_RibbonKnit</div>
+                <div class="avatar-author">作者: KousakaMochi_</div>
+                <div class="avatar-id">ID: avtr_c3e1f746-b565-4e4d-ab8d-9fc51d7959bb</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="amelia" data-author="ᴋᴏʀɴ">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_ccbb5017-58a1-4f8a-b4a5-11d4d96e30db', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_19150616-2fa3-4bd8-9973-e6c0db14312b/2/256" alt="Amelia">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Amelia</div>
+                <div class="avatar-author">作者: ᴋᴏʀɴ</div>
+                <div class="avatar-id">ID: avtr_ccbb5017-58a1-4f8a-b4a5-11d4d96e30db</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="akyo_to-st fox" data-author="ささのき">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_b950ae46-6ba0-4830-b55a-77957f468a1d', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_8f138f75-5bd9-4c7a-87fa-b81f2fd0ea64/1/256" alt="akyo_to-st fox">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">akyo_to-st fox</div>
+                <div class="avatar-author">作者: ささのき</div>
+                <div class="avatar-id">ID: avtr_b950ae46-6ba0-4830-b55a-77957f468a1d</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="nagi_sample" data-author="rio∗">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_e9073961-2a03-44c3-b18f-dce2ed5b2338', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_27a57d8d-c4ba-4e84-8bac-35cb5bf41fec/3/256" alt="Nagi_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Nagi_Sample</div>
+                <div class="avatar-author">作者: rio∗</div>
+                <div class="avatar-id">ID: avtr_e9073961-2a03-44c3-b18f-dce2ed5b2338</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="cizuku v4 sample" data-author="jamzo2020">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_e3580254-c1ea-4f72-b8c7-ad8081f9f3aa', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_467437d2-01e0-4db4-a108-116df5646df5/7/256" alt="Cizuku v4 Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Cizuku v4 Sample</div>
+                <div class="avatar-author">作者: Jamzo2020</div>
+                <div class="avatar-id">ID: avtr_e3580254-c1ea-4f72-b8c7-ad8081f9f3aa</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="papillon + パピヨン + 試着 + kukkipapi" data-author="riirotomato">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_767db6fb-3bb1-476c-9e85-5e3e05d2e0f3', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_cab80438-b59e-4de4-84f2-b31698daa486/2/256" alt="Papillon + パピヨン + 試着 + KukkiPapi">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Papillon + パピヨン + 試着 + KukkiPapi</div>
+                <div class="avatar-author">作者: riirotomato</div>
+                <div class="avatar-id">ID: avtr_767db6fb-3bb1-476c-9e85-5e3e05d2e0f3</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="inabakaya_light_trial" data-author="tsukurunomori">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_64fed476-afee-4f34-ae39-3f95eb3cab18', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_8246b346-fa92-4c56-a0db-0ef7566bd828/2/256" alt="InabaKaya_Light_Trial">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">InabaKaya_Light_Trial</div>
+                <div class="avatar-author">作者: Tsukurunomori</div>
+                <div class="avatar-id">ID: avtr_64fed476-afee-4f34-ae39-3f95eb3cab18</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="森羅 試着版" data-author="mio3io">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_f935e658-a205-49f6-b8f3-c1a3e5c677de', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_b5e6ebad-27ec-4308-988a-48ae608299f7/1/256" alt="森羅 試着版">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">森羅 試着版</div>
+                <div class="avatar-author">作者: mio3io</div>
+                <div class="avatar-id">ID: avtr_f935e658-a205-49f6-b8f3-c1a3e5c677de</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="vket20223s_pedestal_mio" data-author="tokunaga_ac">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_aaa4bbbc-c340-40cd-b6e3-dd4381969c4d', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_882f4ef9-f61d-4981-a809-36ced938eb34/2/256" alt="Vket20223S_Pedestal_Mio">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Vket20223S_Pedestal_Mio</div>
+                <div class="avatar-author">作者: Tokunaga_ac</div>
+                <div class="avatar-id">ID: avtr_aaa4bbbc-c340-40cd-b6e3-dd4381969c4d</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="chiffon_sample" data-author="komado">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_a991cdfc-edb9-4254-9e96-07e633787bd6', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_aac66f5b-de45-4e6b-a325-0b367ffcc468/1/256" alt="Chiffon_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Chiffon_sample</div>
+                <div class="avatar-author">作者: komado</div>
+                <div class="avatar-id">ID: avtr_a991cdfc-edb9-4254-9e96-07e633787bd6</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="lazuli_sample" data-author="0kizakura">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_aec90991-b2ed-4337-a25c-d72d53ff60a8', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_76a23919-30d8-468a-805d-1c901dd31edf/1/256" alt="Lazuli_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Lazuli_Sample</div>
+                <div class="avatar-author">作者: 0kizakura</div>
+                <div class="avatar-id">ID: avtr_aec90991-b2ed-4337-a25c-d72d53ff60a8</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="senbyo_sample" data-author="3400">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_7f233963-ba1b-4ee6-bde4-bbaaebbdd62c', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_fcb1dbec-3caa-48d4-ae8a-57ea67114e42/2/256" alt="Senbyo_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Senbyo_Sample</div>
+                <div class="avatar-author">作者: 3400</div>
+                <div class="avatar-id">ID: avtr_7f233963-ba1b-4ee6-bde4-bbaaebbdd62c</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="mizuki sample" data-author="paryi_">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_11ca9152-5c54-4e38-9c7c-44c41178c1ee', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_e059eda2-e9d1-4569-a3c0-96d77d7cb422/2/256" alt="mizuki sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">mizuki sample</div>
+                <div class="avatar-author">作者: Paryi_</div>
+                <div class="avatar-id">ID: avtr_11ca9152-5c54-4e38-9c7c-44c41178c1ee</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="runa_sample" data-author="sitiya_しちや">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_193e94bb-165b-425f-9372-8cdeec1c0036', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_7ae6d035-264c-4178-81ef-b150a628b8c5/4/256" alt="Runa_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Runa_Sample</div>
+                <div class="avatar-author">作者: sitiya_しちや</div>
+                <div class="avatar-id">ID: avtr_193e94bb-165b-425f-9372-8cdeec1c0036</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="hakua_sampleavatar" data-author="kousakamochi_">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_f309b445-1c45-4993-b8a7-83192f218426', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_c07e3ba9-64bd-4a25-b534-2d5be8697fc5/1/256" alt="Hakua_SampleAvatar">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Hakua_SampleAvatar</div>
+                <div class="avatar-author">作者: KousakaMochi_</div>
+                <div class="avatar-id">ID: avtr_f309b445-1c45-4993-b8a7-83192f218426</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="星恋ちゃん試着用" data-author="rinrin_0v0">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_8ba88757-1db0-4061-bc0a-f03833b9bcc3', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_71da5ee4-18ae-43e7-bd5a-8b4292ef5f49/4/256" alt="星恋ちゃん試着用">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">星恋ちゃん試着用</div>
+                <div class="avatar-author">作者: RinRin_0v0</div>
+                <div class="avatar-id">ID: avtr_8ba88757-1db0-4061-bc0a-f03833b9bcc3</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name=""メルニナ" (mernina) sample" data-author="radika">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_60340762-47f6-480b-b117-7ed4c713d6f6', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_a473ef24-3f25-440e-86d5-c322edb9067d/4/256" alt=""メルニナ" (Mernina) Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">"メルニナ" (Mernina) Sample</div>
+                <div class="avatar-author">作者: RADIKA</div>
+                <div class="avatar-id">ID: avtr_60340762-47f6-480b-b117-7ed4c713d6f6</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="flare_sample" data-author="0kizakura">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_485301bb-745e-4555-a618-2bad468c08ad', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_542d99ba-b6b7-4872-8ac2-7bb0bd108b08/6/256" alt="Flare_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Flare_Sample</div>
+                <div class="avatar-author">作者: 0kizakura</div>
+                <div class="avatar-id">ID: avtr_485301bb-745e-4555-a618-2bad468c08ad</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="chmrolosample" data-author="りっふぁ">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_66393c73-2b95-4762-96a1-6bbc6c2795e6', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_715b1727-e1b8-414d-b091-47754f852367/4/256" alt="ChmroloSample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">ChmroloSample</div>
+                <div class="avatar-author">作者: りっふぁ</div>
+                <div class="avatar-id">ID: avtr_66393c73-2b95-4762-96a1-6bbc6c2795e6</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="猫耳メイド服メルシア【試着用】" data-author="paruaki">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_756e1bad-e53a-436b-a1b5-26b25ce51b7a', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_a593a300-75ee-4d9c-8e7f-b0908accf21d/3/256" alt="猫耳メイド服メルシア【試着用】">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">猫耳メイド服メルシア【試着用】</div>
+                <div class="avatar-author">作者: paruaki</div>
+                <div class="avatar-id">ID: avtr_756e1bad-e53a-436b-a1b5-26b25ce51b7a</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="sample ""elmina""" data-author="bikitan">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_ea9058e6-0b70-407e-b630-11f077b0ddc9', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_389862e4-723a-4ff0-99a8-f49782d11ad7/1/256" alt="Sample ""Elmina""">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Sample ""Elmina""</div>
+                <div class="avatar-author">作者: bikitan</div>
+                <div class="avatar-id">ID: avtr_ea9058e6-0b70-407e-b630-11f077b0ddc9</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="manuka_sample" data-author="jingo">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_acefc4e6-a6c7-443c-885c-b34a06b308e5', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_67871ea2-b5f0-4a0e-8a7c-ed2bf40c9e48/1/256" alt="MANUKA_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">MANUKA_sample</div>
+                <div class="avatar-author">作者: JINGO</div>
+                <div class="avatar-id">ID: avtr_acefc4e6-a6c7-443c-885c-b34a06b308e5</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="ruru_sample" data-author="hehzs~">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_90edf78f-6b2e-478c-b99f-eff24768806a', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_4e531d11-369d-4e36-b648-e434403ab1f1/2/256" alt="Ruru_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Ruru_Sample</div>
+                <div class="avatar-author">作者: HeHZS~</div>
+                <div class="avatar-id">ID: avtr_90edf78f-6b2e-478c-b99f-eff24768806a</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="進捗55%！でびー debbie sample" data-author="ねこ隠し">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_a30f900c-7b08-45fa-b1d0-23c7ac1ff7f7', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_7c4a3a13-32ca-4202-b1a8-93f74ca40b67/5/256" alt="進捗55%！でびー Debbie Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">進捗55%！でびー Debbie Sample</div>
+                <div class="avatar-author">作者: ねこ隠し</div>
+                <div class="avatar-id">ID: avtr_a30f900c-7b08-45fa-b1d0-23c7ac1ff7f7</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="lilika_vket2023_trial" data-author="わこー">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_f73afaf6-47b2-44bf-ae31-b3941b56f7e7', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_ce0861a0-0e31-4806-a17c-cb17a7e58cd8/1/256" alt="Lilika_Vket2023_trial">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Lilika_Vket2023_trial</div>
+                <div class="avatar-author">作者: わこー</div>
+                <div class="avatar-id">ID: avtr_f73afaf6-47b2-44bf-ae31-b3941b56f7e7</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="moe_sample" data-author="『 チカ 』">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_895dc714-e7f0-429d-9989-c68bf092ab0b', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_752c38f5-f1be-4576-acd2-712da8b98d40/2/256" alt="Moe_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Moe_Sample</div>
+                <div class="avatar-author">作者: 『 チカ 』</div>
+                <div class="avatar-id">ID: avtr_895dc714-e7f0-429d-9989-c68bf092ab0b</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="[まわり道]アルティエナ&ミシェル" data-author="リシチカ">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_868624f0-0575-4234-a7e2-f65d96a66681', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_f69d5050-f702-481f-977c-66a73d803614/2/256" alt="[まわり道]アルティエナ&ミシェル">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">[まわり道]アルティエナ&ミシェル</div>
+                <div class="avatar-author">作者: リシチカ</div>
+                <div class="avatar-id">ID: avtr_868624f0-0575-4234-a7e2-f65d96a66681</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="めいゆん 試着中" data-author="ntori3">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_5ce6aa8d-8773-4f09-873d-0c339296b5bc', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_aca44606-3f06-4ba5-b0a4-f4e51fd547f3/3/256" alt="めいゆん 試着中">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">めいゆん 試着中</div>
+                <div class="avatar-author">作者: NTori3</div>
+                <div class="avatar-id">ID: avtr_5ce6aa8d-8773-4f09-873d-0c339296b5bc</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="necomaid" data-author="sono_jp">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_03fd3247-cdd2-4cd2-b69b-6ebba64feb7b', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_aa0a796a-f701-4e22-85d3-923e99c745b3/3/256" alt="NecoMaid">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">NecoMaid</div>
+                <div class="avatar-author">作者: sono_jp</div>
+                <div class="avatar-id">ID: avtr_03fd3247-cdd2-4cd2-b69b-6ebba64feb7b</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="rusk_sample" data-author="komado">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_6611079e-e67b-4c3f-b3ef-5e0e7611652a', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_2081f716-d5ce-4aba-bacd-54379a00c12c/5/256" alt="Rusk_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Rusk_sample</div>
+                <div class="avatar-author">作者: komado</div>
+                <div class="avatar-id">ID: avtr_6611079e-e67b-4c3f-b3ef-5e0e7611652a</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="kanae_sample" data-author="에 로 몽">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_d30a343f-02ba-45ab-ab30-2d0930d27605', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_538c304e-678f-46e3-abb1-f5d468ba7aee/3/256" alt="Kanae_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Kanae_Sample</div>
+                <div class="avatar-author">作者: 에 로 몽</div>
+                <div class="avatar-id">ID: avtr_d30a343f-02ba-45ab-ab30-2d0930d27605</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="rindo_sample" data-author="jingo">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_8b5d44b2-5aec-4176-afc3-93ead7dd183f', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_12a0bf51-a4ab-4975-a110-f5d02b911652/2/256" alt="RINDO_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">RINDO_sample</div>
+                <div class="avatar-author">作者: JINGO</div>
+                <div class="avatar-id">ID: avtr_8b5d44b2-5aec-4176-afc3-93ead7dd183f</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="관객용아바타" data-author="여우님">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_ac012ae3-d4ae-4a49-b74c-b00e5d6ed5c2', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_a32fabc0-d23f-4bae-9b1c-88412532778f/1/256" alt="관객용아바타">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">관객용아바타</div>
+                <div class="avatar-author">作者: 여우님</div>
+                <div class="avatar-id">ID: avtr_ac012ae3-d4ae-4a49-b74c-b00e5d6ed5c2</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="kikyo_sample" data-author="pondero">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_26aeb235-3942-4953-8b1c-7c2385febb8b', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_490f9f5e-393c-4843-8e6c-173affdb4a6c/4/256" alt="KIKYO_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">KIKYO_Sample</div>
+                <div class="avatar-author">作者: pondero</div>
+                <div class="avatar-id">ID: avtr_26aeb235-3942-4953-8b1c-7c2385febb8b</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="hakka trial version" data-author="mio3io">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_32641978-59e7-4fb8-bac3-e849af02c540', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_b2384d9c-d3fe-4531-89fb-fdc3b33526a7/4/256" alt="Hakka Trial Version">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Hakka Trial Version</div>
+                <div class="avatar-author">作者: mio3io</div>
+                <div class="avatar-id">ID: avtr_32641978-59e7-4fb8-bac3-e849af02c540</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="komari_sample" data-author="hehzs_cn">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_b4ce4108-3ec1-4e40-a223-d89ceed361ac', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_210ce19f-539c-4263-8cbb-717db9095108/1/256" alt="Komari_Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Komari_Sample</div>
+                <div class="avatar-author">作者: HeHZS_CN</div>
+                <div class="avatar-id">ID: avtr_b4ce4108-3ec1-4e40-a223-d89ceed361ac</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="laika sample" data-author="rio∗">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_be39dc25-6d88-4ee1-bf65-6966d661e68b', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_2127a5f6-1a24-4786-a407-6143ac6eed60/5/256" alt="Laika Sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Laika Sample</div>
+                <div class="avatar-author">作者: rio∗</div>
+                <div class="avatar-id">ID: avtr_be39dc25-6d88-4ee1-bf65-6966d661e68b</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="selestia_sample" data-author="jingo">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_1c296d25-f3c9-4fc2-a290-bae429ad5b6c', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_537f5005-2659-460a-88b0-805c18e15809/1/256" alt="SELESTIA_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">SELESTIA_sample</div>
+                <div class="avatar-author">作者: JINGO</div>
+                <div class="avatar-id">ID: avtr_1c296d25-f3c9-4fc2-a290-bae429ad5b6c</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="lunalitt_sample" data-author="ひゅうがなつ">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_b2a82ae4-a005-4490-9969-f321cd879a58', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_b16c5b32-3874-4bd9-878f-0b9fe5f49b6b/9/256" alt="Lunalitt_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Lunalitt_sample</div>
+                <div class="avatar-author">作者: ひゅうがなつ</div>
+                <div class="avatar-id">ID: avtr_b2a82ae4-a005-4490-9969-f321cd879a58</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="ciel_sample" data-author="れぴの！">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_c5fdceb2-5f0b-433c-80b9-23d05b62d154', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_70bd8473-3c3e-4ed5-acb1-df8a4f9f28f0/2/256" alt="ciel_sample">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">ciel_sample</div>
+                <div class="avatar-author">作者: れぴの！</div>
+                <div class="avatar-id">ID: avtr_c5fdceb2-5f0b-433c-80b9-23d05b62d154</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="tolass demo" data-author="yonemaru">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_77a30325-0044-463a-9ab9-f0dbb27d4652', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_37379887-57f1-47f6-9234-703a26a1300a/4/256" alt="Tolass DEMO">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Tolass DEMO</div>
+                <div class="avatar-author">作者: Yonemaru</div>
+                <div class="avatar-id">ID: avtr_77a30325-0044-463a-9ab9-f0dbb27d4652</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="sample_soleil" data-author="bikitan">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_92c1a8a4-7f16-4bd9-a764-e27b20f3c706', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_e377218d-371d-4ee9-9dc3-1774bb268fc7/4/256" alt="Sample_Soleil">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">Sample_Soleil</div>
+                <div class="avatar-author">作者: bikitan</div>
+                <div class="avatar-id">ID: avtr_92c1a8a4-7f16-4bd9-a764-e27b20f3c706</div>
+            </div>
+        </div>
+        <div class="avatar-card" data-name="ququ u" data-author="sono_jp">
+            <div class="avatar-image-container" onclick="window.open('https://vrchat.com/home/avatar/avtr_051e1dfc-cc42-4ef1-a976-b8cc4cea3ae7', '_blank')">
+                <img class="avatar-image" src="https://api.vrchat.cloud/api/1/image/file_1163c76b-b442-41c9-98cf-f2db9529748e/2/256" alt="QuQu U">
+                <div class="avatar-image-overlay">VRChatで見る</div>
+            </div>
+            <div class="avatar-info">
+                <div class="avatar-name">QuQu U</div>
+                <div class="avatar-author">作者: sono_jp</div>
+                <div class="avatar-id">ID: avtr_051e1dfc-cc42-4ef1-a976-b8cc4cea3ae7</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 検索機能
+        document.getElementById('search-input').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            document.querySelectorAll('.avatar-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                const author = card.getAttribute('data-author');
+                card.style.display = (name.includes(searchValue) || author.includes(searchValue)) ? 'block' : 'none';
+            });
+        });
+        
+        // フィルター機能
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.avatar-card').forEach(card => {
+                    const name = card.getAttribute('data-name');
+                    if (filter === 'all' || 
+                        (filter === 'sample' && name.includes('sample')) || 
+                        (filter === 'trial' && (name.includes('trial') || name.includes('試着')))) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
