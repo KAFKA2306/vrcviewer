@@ -14,6 +14,10 @@ THUMB = "https://example.invalid/image.png"
 TEMPLATE = "A{{AVATAR_CARDS}}B{{WORLD_FILTERS}}C{{WORLD_CARDS}}D\n"
 
 
+def csv_cell(value: str) -> str:
+    return '"' + value.replace('"', '""') + '"'
+
+
 class BuildTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
@@ -28,13 +32,13 @@ class BuildTests(unittest.TestCase):
 
     def write_avatar(self, name: str, thumbnail: str = THUMB) -> None:
         (self.root / "sample_avatars.csv").write_text(
-            HEADER + f'{AVATAR_ID},"{name}",{AUTHOR_ID},Creator,{thumbnail}\n',
+            HEADER + f"{AVATAR_ID},{csv_cell(name)},{AUTHOR_ID},Creator,{thumbnail}\n",
             encoding="utf-8",
         )
 
     def write_world(self, path: Path, world_id: str, name: str, thumbnail: str = THUMB) -> None:
         path.write_text(
-            HEADER + f'{world_id},"{name}",{AUTHOR_ID},Creator,{thumbnail}\n',
+            HEADER + f"{world_id},{csv_cell(name)},{AUTHOR_ID},Creator,{thumbnail}\n",
             encoding="utf-8",
         )
 
@@ -64,6 +68,8 @@ class BuildTests(unittest.TestCase):
         worlds = load_catalog(self.root)[1]
         self.assertEqual(len(worlds), 1)
         self.assertIn("日本語", worlds[0].name)
+        self.assertIn('"quoted"', worlds[0].name)
+        self.assertIn("🌏", worlds[0].name)
 
     def test_missing_column_is_rejected_with_file_context(self) -> None:
         (self.root / "sample_avatars.csv").write_text("ID,Name\nfoo,bar\n", encoding="utf-8")
