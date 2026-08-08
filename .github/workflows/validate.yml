@@ -1,0 +1,52 @@
+name: Validate generated gallery
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - main
+      - fix/issue-1-deterministic-build
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate current gallery on implementation branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/issue-1-deterministic-build' && github.actor != 'github-actions[bot]'
+        run: python -m vrcviewer.build
+      - name: Commit generated index on implementation branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/issue-1-deterministic-build' && github.actor != 'github-actions[bot]'
+        run: |
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "index.html already current"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Regenerate gallery from validated CSV"
+            git push origin HEAD:fix/issue-1-deterministic-build
+          fi
+      - name: Verify generated index has no drift
+        if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main' || github.actor == 'github-actions[bot]'
+        run: python -m vrcviewer.build --check
+      - name: Upload build manifest
+        if: always() && hashFiles('build-manifest.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: gallery-build-manifest-${{ github.run_id }}
+          path: build-manifest.json
+          if-no-files-found: error
