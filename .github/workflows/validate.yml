@@ -27,7 +27,9 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Generate current gallery on implementation branch
         if: github.event_name == 'push' && github.ref == 'refs/heads/fix/issue-1-deterministic-build' && github.actor != 'github-actions[bot]'
-        run: python -m vrcviewer.build
+        run: |
+          set -o pipefail
+          python -m vrcviewer.build 2>&1 | tee build-diagnostics.log
       - name: Commit generated index on implementation branch
         if: github.event_name == 'push' && github.ref == 'refs/heads/fix/issue-1-deterministic-build' && github.actor != 'github-actions[bot]'
         run: |
@@ -42,7 +44,16 @@ jobs:
           fi
       - name: Verify generated index has no drift
         if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main' || github.actor == 'github-actions[bot]'
-        run: python -m vrcviewer.build --check
+        run: |
+          set -o pipefail
+          python -m vrcviewer.build --check 2>&1 | tee build-diagnostics.log
+      - name: Upload build diagnostics
+        if: always() && hashFiles('build-diagnostics.log') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: gallery-build-diagnostics-${{ github.run_id }}
+          path: build-diagnostics.log
+          if-no-files-found: error
       - name: Upload build manifest
         if: always() && hashFiles('build-manifest.json') != ''
         uses: actions/upload-artifact@v4
