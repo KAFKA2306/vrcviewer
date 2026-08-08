@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kafka2306.github.io/vrcviewer/schema/gallery-csv.schema.json",
+  "title": "VRChat gallery CSV row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ID", "Name", "Author ID", "Author Name", "Thumbnail"],
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "Avatar avtr_<UUID> or world wrld_<UUID>; the expected prefix is selected by the input file type."
+    },
+    "Name": {"type": "string", "minLength": 1},
+    "Author ID": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Source author identifier. Legacy rows may contain non-usr_ identifiers, so it is not used to construct VRChat links."
+    },
+    "Author Name": {"type": "string", "minLength": 1},
+    "Thumbnail": {"type": "string", "format": "uri", "pattern": "^https://"}
+  },
+  "x-csv": {
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "headerOrder": ["ID", "Name", "Author ID", "Author Name", "Thumbnail"],
+    "blankRows": "ignored",
+    "newlines": ["LF", "CRLF"]
+  }
+}
