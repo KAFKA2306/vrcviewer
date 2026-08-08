@@ -28,7 +28,7 @@ ID,Name,Author ID,Author Name,Thumbnail
 
 - avatar ID: `avtr_<UUID>`
 - world ID: `wrld_<UUID>`
-- author ID: `usr_<UUID>`
+- `Author ID`: 空でないsource identifier。既存データには`usr_`形式でないlegacy値があるため、VRChatリンク生成には使用しない
 - `Name`, `Author Name`, `Thumbnail`: 空欄禁止
 - `Thumbnail`: absolute `https://` URLのみ
 
