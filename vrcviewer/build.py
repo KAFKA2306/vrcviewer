@@ -4,6 +4,7 @@ import argparse
 import csv
 import hashlib
 import html
+import io
 import json
 import os
 import re
@@ -23,7 +24,6 @@ ID_PATTERNS = {
     "avatar": re.compile(rf"^avtr_{UUID}$"),
     "world": re.compile(rf"^wrld_{UUID}$"),
 }
-AUTHOR_ID_PATTERN = re.compile(rf"^usr_{UUID}$")
 
 
 class BuildError(ValueError):
@@ -73,7 +73,7 @@ def read_csv(path: Path, kind: str, category: str) -> list[Record]:
     except UnicodeDecodeError as exc:
         raise BuildError(f"{path}: input must be UTF-8") from exc
 
-    reader = csv.DictReader(text.splitlines())
+    reader = csv.DictReader(io.StringIO(text, newline=""))
     if reader.fieldnames is None:
         raise BuildError(f"{path}: missing CSV header")
     if tuple(reader.fieldnames) != REQUIRED_COLUMNS:
@@ -101,8 +101,6 @@ def read_csv(path: Path, kind: str, category: str) -> list[Record]:
 
         if not ID_PATTERNS[kind].fullmatch(resource_id):
             raise BuildError(f"{path}:{row_number}: invalid {kind} ID {resource_id!r}")
-        if not AUTHOR_ID_PATTERN.fullmatch(author_id):
-            raise BuildError(f"{path}:{row_number}: invalid author ID {author_id!r}")
         validate_https_url(thumbnail, path, row_number, "Thumbnail")
 
         if resource_id in seen_ids:
