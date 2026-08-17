@@ -16,8 +16,6 @@ CSVを正準入力として、VRChatのアバターとワールドを検索・�
 - `index.html`: **生成物**。手編集しない
 - `build-manifest.json`: 実行時に生成する監査manifest。Git管理外で、CIではartifactとして保存する
 
-Notebook (`avatar.ipynb`) は探索・確認用であり、production buildの正準経路ではありません。
-
 ## 入力スキーマ
 
 CSVはUTF-8、カンマ区切りで、headerは次の順序に固定します。
