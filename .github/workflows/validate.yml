@@ -4,12 +4,10 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches:
-      - main
-      - fix/issue-1-deterministic-build
+    branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate:
@@ -25,25 +23,7 @@ jobs:
           python-version: '3.12'
       - name: Run regression tests
         run: python -m unittest discover -s tests -v
-      - name: Generate current gallery on implementation branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/issue-1-deterministic-build' && github.actor != 'github-actions[bot]'
-        run: |
-          set -o pipefail
-          python -m vrcviewer.build 2>&1 | tee build-diagnostics.log
-      - name: Commit generated index on implementation branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/issue-1-deterministic-build' && github.actor != 'github-actions[bot]'
-        run: |
-          git add index.html
-          if git diff --cached --quiet; then
-            echo "index.html already current"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Regenerate gallery from validated CSV"
-            git push origin HEAD:fix/issue-1-deterministic-build
-          fi
       - name: Verify generated index has no drift
-        if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main' || github.actor == 'github-actions[bot]'
         run: |
           set -o pipefail
           python -m vrcviewer.build --check 2>&1 | tee build-diagnostics.log
