@@ -1,10 +1,10 @@
+https://kafka2306.github.io/vrcviewer/
+
 # VRChatギャラリー
 
 [![Validate generated gallery](https://github.com/KAFKA2306/vrcviewer/actions/workflows/validate.yml/badge.svg)](https://github.com/KAFKA2306/vrcviewer/actions/workflows/validate.yml)
 
 CSVを正準入力として、VRChatのアバターとワールドを検索・カテゴリ閲覧できる静的ギャラリーです。
-
-公開サイト: https://kafka2306.github.io/vrcviewer/
 
 ## 正準データと生成物
 
