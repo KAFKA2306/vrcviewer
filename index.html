@@ -35,11 +35,11 @@
     <p>次に試すアバターや遊びに行くワールドを、名前・作者・カテゴリから探せます。気になるカードからVRChatの公式ページで確認できます。</p>
   </header>
   <div class="tab-container" role="tablist" aria-label="探す対象">
-    <button class="tab-btn active" type="button" data-tab="avatars">アバターを探す</button>
-    <button class="tab-btn" type="button" data-tab="worlds">ワールドを探す</button>
+    <button class="tab-btn active" id="tab-avatars" type="button" role="tab" aria-selected="true" aria-controls="avatars" tabindex="0" data-tab="avatars">アバターを探す</button>
+    <button class="tab-btn" id="tab-worlds" type="button" role="tab" aria-selected="false" aria-controls="worlds" tabindex="-1" data-tab="worlds">ワールドを探す</button>
   </div>
 
-  <section id="avatars" class="tab-content active">
+  <section id="avatars" class="tab-content active" role="tabpanel" aria-labelledby="tab-avatars">
     <div class="search-container"><input type="search" id="avatar-search" aria-label="アバターを名前または作者で検索" placeholder="アバター名やクリエイター名で検索..."></div>
     <div class="gallery">
 <article class="card avatar-card" data-name="pitanサンプルver1.11" data-author="suzukura"><a class="image-container" href="https://vrchat.com/home/avatar/avtr_8c843dd2-1772-41c9-ab53-a5b1d91053bd" target="_blank" rel="noopener noreferrer"><img class="image" src="https://api.vrchat.cloud/api/1/image/file_1effdc8c-469b-4515-a8df-31831343f4d9/10/256" alt="PITANサンプルver1.11" loading="lazy"><span class="image-overlay">VRChatで見る</span></a><div class="info"><div class="name">PITANサンプルver1.11</div><div class="author">作者: SUZUKURA</div><div class="id">ID: avtr_8c843dd2-1772-41c9-ab53-a5b1d91053bd</div></div></article>
@@ -91,7 +91,7 @@
     </div>
   </section>
 
-  <section id="worlds" class="tab-content">
+  <section id="worlds" class="tab-content" role="tabpanel" aria-labelledby="tab-worlds" hidden>
     <div class="search-container"><input type="search" id="world-search" aria-label="ワールドを名前または作者で検索" placeholder="ワールド名やクリエイター名で検索..."></div>
     <div class="filter-container">
       <button class="filter-btn active" type="button" data-filter="all">すべて</button>
@@ -391,12 +391,34 @@
   </section>
 
   <script>
-    document.querySelectorAll('.tab-btn').forEach((button) => button.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach((item) => item.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach((item) => item.classList.remove('active'));
-      button.classList.add('active');
-      document.getElementById(button.dataset.tab).classList.add('active');
-    }));
+    const tabs = [...document.querySelectorAll('.tab-btn')];
+
+    function activateTab(button) {
+      tabs.forEach((item) => {
+        const selected = item === button;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+        const panel = document.getElementById(item.dataset.tab);
+        panel.classList.toggle('active', selected);
+        panel.hidden = !selected;
+      });
+    }
+
+    tabs.forEach((button, index) => {
+      button.addEventListener('click', () => activateTab(button));
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let nextIndex = index;
+        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = tabs.length - 1;
+        activateTab(tabs[nextIndex]);
+        tabs[nextIndex].focus();
+      });
+    });
 
     function bindSearch(inputId, selector) {
       document.getElementById(inputId).addEventListener('input', (event) => {
