@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VRChatギャラリー</title>
+  <title>VRChat Explorer</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; color: #222; }
-    h1 { text-align: center; margin-bottom: 30px; }
+    .hero { max-width: 760px; margin: 20px auto 24px; text-align: center; }
+    h1 { margin: 0 0 10px; }
+    .hero p { margin: 0; color: #555; line-height: 1.6; }
     .tab-container, .filter-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
     .tab-btn, .filter-btn { padding: 9px 16px; background: #fff; border: 1px solid #ccc; border-radius: 20px; cursor: pointer; }
     .tab-btn.active, .filter-btn.active { background: #315f91; color: #fff; }
+    button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
     .search-container { max-width: 600px; margin: 0 auto 24px; }
     .search-container input { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
     .tab-content { display: none; }
@@ -27,14 +30,17 @@
   </style>
 </head>
 <body>
-  <h1>VRChatギャラリー</h1>
-  <div class="tab-container">
-    <button class="tab-btn active" type="button" data-tab="avatars">アバター</button>
-    <button class="tab-btn" type="button" data-tab="worlds">ワールド</button>
+  <header class="hero">
+    <h1>VRChat Explorer</h1>
+    <p>次に試すアバターや遊びに行くワールドを、名前・作者・カテゴリから探せます。気になるカードからVRChatの公式ページで確認できます。</p>
+  </header>
+  <div class="tab-container" role="tablist" aria-label="探す対象">
+    <button class="tab-btn active" type="button" data-tab="avatars">アバターを探す</button>
+    <button class="tab-btn" type="button" data-tab="worlds">ワールドを探す</button>
   </div>
 
   <section id="avatars" class="tab-content active">
-    <div class="search-container"><input type="search" id="avatar-search" placeholder="アバター名やクリエイター名で検索..."></div>
+    <div class="search-container"><input type="search" id="avatar-search" aria-label="アバターを名前または作者で検索" placeholder="アバター名やクリエイター名で検索..."></div>
     <div class="gallery">
 <article class="card avatar-card" data-name="pitanサンプルver1.11" data-author="suzukura"><a class="image-container" href="https://vrchat.com/home/avatar/avtr_8c843dd2-1772-41c9-ab53-a5b1d91053bd" target="_blank" rel="noopener noreferrer"><img class="image" src="https://api.vrchat.cloud/api/1/image/file_1effdc8c-469b-4515-a8df-31831343f4d9/10/256" alt="PITANサンプルver1.11" loading="lazy"><span class="image-overlay">VRChatで見る</span></a><div class="info"><div class="name">PITANサンプルver1.11</div><div class="author">作者: SUZUKURA</div><div class="id">ID: avtr_8c843dd2-1772-41c9-ab53-a5b1d91053bd</div></div></article>
 <article class="card avatar-card" data-name="aoi vket2024 sample" data-author="jamzo2020"><a class="image-container" href="https://vrchat.com/home/avatar/avtr_557a56fc-5c6b-40d4-8c99-d1609125eb12" target="_blank" rel="noopener noreferrer"><img class="image" src="https://api.vrchat.cloud/api/1/image/file_712ffb4f-8587-4ab3-8911-76553eaf671f/3/256" alt="AOI vket2024 Sample" loading="lazy"><span class="image-overlay">VRChatで見る</span></a><div class="info"><div class="name">AOI vket2024 Sample</div><div class="author">作者: Jamzo2020</div><div class="id">ID: avtr_557a56fc-5c6b-40d4-8c99-d1609125eb12</div></div></article>
@@ -86,7 +92,7 @@
   </section>
 
   <section id="worlds" class="tab-content">
-    <div class="search-container"><input type="search" id="world-search" placeholder="ワールド名やクリエイター名で検索..."></div>
+    <div class="search-container"><input type="search" id="world-search" aria-label="ワールドを名前または作者で検索" placeholder="ワールド名やクリエイター名で検索..."></div>
     <div class="filter-container">
       <button class="filter-btn active" type="button" data-filter="all">すべて</button>
 <button class="filter-btn" type="button" data-filter="chill">chill</button>
