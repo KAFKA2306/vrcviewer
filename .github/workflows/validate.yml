@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
@@ -16,13 +16,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Run regression tests
         run: python -m unittest discover -s tests -v
+      - name: Refresh generated index on PR branch
+        if: github.event_name == 'pull_request'
+        run: |
+          python -m vrcviewer.build
+          if ! git diff --quiet -- index.html; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "build: refresh generated gallery"
+            git push
+          fi
       - name: Verify generated index has no drift
         run: |
           set -o pipefail
