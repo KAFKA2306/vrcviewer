@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VRChatギャラリー</title>
+  <title>VRChat Explorer</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; color: #222; }
-    h1 { text-align: center; margin-bottom: 30px; }
+    .hero { max-width: 760px; margin: 20px auto 24px; text-align: center; }
+    h1 { margin: 0 0 10px; }
+    .hero p { margin: 0; color: #555; line-height: 1.6; }
     .tab-container, .filter-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
     .tab-btn, .filter-btn { padding: 9px 16px; background: #fff; border: 1px solid #ccc; border-radius: 20px; cursor: pointer; }
     .tab-btn.active, .filter-btn.active { background: #315f91; color: #fff; }
+    button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
     .search-container { max-width: 600px; margin: 0 auto 24px; }
     .search-container input { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
     .tab-content { display: none; }
@@ -27,21 +30,24 @@
   </style>
 </head>
 <body>
-  <h1>VRChatギャラリー</h1>
-  <div class="tab-container">
-    <button class="tab-btn active" type="button" data-tab="avatars">アバター</button>
-    <button class="tab-btn" type="button" data-tab="worlds">ワールド</button>
+  <header class="hero">
+    <h1>VRChat Explorer</h1>
+    <p>次に試すアバターや遊びに行くワールドを、名前・作者・カテゴリから探せます。気になるカードからVRChatの公式ページで確認できます。</p>
+  </header>
+  <div class="tab-container" role="tablist" aria-label="探す対象">
+    <button class="tab-btn active" type="button" data-tab="avatars">アバターを探す</button>
+    <button class="tab-btn" type="button" data-tab="worlds">ワールドを探す</button>
   </div>
 
   <section id="avatars" class="tab-content active">
-    <div class="search-container"><input type="search" id="avatar-search" placeholder="アバター名やクリエイター名で検索..."></div>
+    <div class="search-container"><input type="search" id="avatar-search" aria-label="アバターを名前または作者で検索" placeholder="アバター名やクリエイター名で検索..."></div>
     <div class="gallery">
 {{AVATAR_CARDS}}
     </div>
   </section>
 
   <section id="worlds" class="tab-content">
-    <div class="search-container"><input type="search" id="world-search" placeholder="ワールド名やクリエイター名で検索..."></div>
+    <div class="search-container"><input type="search" id="world-search" aria-label="ワールドを名前または作者で検索" placeholder="ワールド名やクリエイター名で検索..."></div>
     <div class="filter-container">
       <button class="filter-btn active" type="button" data-filter="all">すべて</button>
 {{WORLD_FILTERS}}
